@@ -1,0 +1,46 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.no-webp .inicio {
+    background-image: url(../img/jardin1.jpg);
+}
+
+.webp .inicio {
+    background-image: url(../img/jardin1.webp);
+}
+
+.header {
+    background-color: v.$grisOscuro;
+    &.inicio {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+
+        @include m.tablet {
+            min-height: 70rem;
+        }
+
+        .contenido-header {
+            @include m.tablet {
+                min-height: 70rem;
+            }
+        }
+    }
+}
+
+.contenido-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+
+    h1 {
+        color: v.$blanco;
+        text-align: left;
+        font-weight: v.$bold;
+        line-height: 2;
+        max-width: 60rem;
+    }
+}
+

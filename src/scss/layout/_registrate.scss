@@ -1,0 +1,21 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.webp .registrate_img {
+    background-image: url(../img/jardin1.webp);
+}
+
+.no-webp .registrate_img {
+    background-image: url(../img/jardin1.png);
+}
+
+.registrate_img {
+    background-position: center center;
+    background-size: cover;
+    height: 25rem;
+
+    @include m.tablet {
+        height: 40rem;
+    }
+    
+}

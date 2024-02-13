@@ -1,0 +1,45 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.webp .iniciarSesion_img {
+    background-image: url(../img/jardin2.webp);
+}
+
+.no-webp .iniciarSesion_img {
+    background-image: url(../img/jardin2.png);
+}
+
+.iniciarSesion_img {
+    background-position: center center;
+    background-size: cover;
+    height: 25rem;
+
+    @include m.tablet {
+        height: 40rem;
+    }
+    
+}
+
+.registrarse {
+    font-size: 2rem;
+    a {
+        color: v.$negro;
+    }
+    span {
+        color: v.$verdeOscuro;
+    }
+
+    &::after {
+        content: '';
+        display: block;
+        width: 24rem;
+        height: .5rem;
+        background-color: v.$verdeOscuro;
+        margin-top: .5rem;
+        border-radius: .5rem;
+
+        @include m.tablet {
+            width: 40rem;
+        }
+    }
+}

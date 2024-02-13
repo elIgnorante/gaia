@@ -1,0 +1,23 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.btn-verde {
+    @include m.boton(v.$verdeOscuro);
+}
+
+.btn-grisOscuro {
+    @include m.boton(v.$grisOscuro);
+}
+
+.btn-amarillo {
+    @include m.boton(v.$amarillo);
+}
+
+.btn-rojo {
+    @include m.boton(v.$rojo);
+}
+
+.boton {
+    border-radius: .5rem;
+    border: none;
+}

@@ -1,0 +1,14 @@
+@use 'base/variables' as v;
+
+
+.seccion {
+    margin-top: calc(v.$separacion / 2);
+    margin-bottom: calc(v.$separacion / 2);
+}
+.contenido-centrado {
+    max-width: 800px;
+}
+
+.sobra {
+    background-color: rgba(0, 0, 0, .5);
+}

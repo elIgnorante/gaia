@@ -1,0 +1,134 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.webp .inicio_img {
+    background-image: url(../img/jardin1.webp);
+}
+
+.no-webp .inicio_img {
+    background-image: url(../img/jardin1.png);
+}
+
+.inicio_img {
+    background-position: center center;
+    background-size: cover;
+    height: 25rem;
+
+    @include m.tablet {
+        height: 40rem;
+    }
+
+}
+
+.anuncio {
+    display: block;
+    padding: 1rem;
+    color: v.$blanco;
+    font-size: 2rem;
+    font-weight: v.$bold;
+    background-color: v.$amarillo;
+    border-radius: .5rem;
+    margin-bottom: 5rem;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 30rem;
+        height: .3rem;
+        background-color: v.$verdeOscuro;
+        margin-top: .5rem;
+        border-radius: .5rem;
+    }
+}
+
+.dispositivo {
+    display: flex;
+    flex-direction: column;
+    border: .5rem solid v.$grisOscuro;
+    border-radius: .2rem;
+    padding: .8rem;
+    margin-bottom: 2rem;
+
+}
+
+.contenedor-info-botones {
+    display: flex;
+    flex-direction: column;
+
+    @include m.tablet {
+        padding: 0 .5rem;
+    }
+
+    @include m.desktop {
+        @include m.grid(2, 1fr, 0);
+    }
+
+   
+
+}
+
+.dispositivo-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+        margin: 0;
+    }
+
+    @include m.tablet {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @include m.desktop {
+        justify-content: space-around;
+    }
+
+}
+.dispositivo-botones {
+    display: flex;
+    flex-direction: column;
+
+    .boton {
+        margin-top: .2rem 0;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    @include m.tablet {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        
+        .boton {
+            margin: 0;
+        }
+    }
+
+    @include m.desktop {
+        justify-content: space-around;
+    }
+}
+
+
+.boton-encendido {
+    width: 5rem;
+    height: 5rem;
+    margin: .2rem auto;
+
+    @include m.tablet {
+        margin: 0;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.contenedor-descripcion {
+    border-top: .5rem solid v.$grisOscuro;
+    border-radius: .2rem;
+}
