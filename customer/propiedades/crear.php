@@ -9,7 +9,13 @@ $errores = [];
 
 $nombre = '';
 $descripcion = '';
-$id = '';
+$temMinima = '';
+$temMaxima = '';
+$humMinima = '';
+$humMaxima = '';
+$modelo = '';
+$idConexion = '';
+
 
 // Ejecuta el código después de que el usuairo envia el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,7 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // La función mysqli_real_escape_string nos protege de inyecciones SQL: Sanitizar
     $nombre = mysqli_real_escape_string($db, $_POST['nombre']);
     $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
-    $id = mysqli_real_escape_string($db, $_POST['id']);
+    $temMinima = mysqli_real_escape_string($db, $_POST['temMinima']);
+    $temMaxima = mysqli_real_escape_string($db, $_POST['temMaxima']);
+    $humMinima = mysqli_real_escape_string($db, $_POST['humMinima']);
+    $humMaxima = mysqli_real_escape_string($db, $_POST['humMaxima']);
+    $modelo = mysqli_real_escape_string($db, $_POST['modelo']);
+    $idConexion = mysqli_real_escape_string($db, $_POST['idConexion']);
+    
 
 
     // Validación del formulario
@@ -28,19 +40,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$descripcion) {
         $errores[] = "Debes añadir una descripcion";
     }
-    if (!$id) {
+    if ($temMinima == '') {
+        $errores[] = "Debes añadir una temperatura minima";
+    }
+    if ($temMaxima == '') {
+        $errores[] = "Debes añadir una temperatura máxima";
+    }
+    if ($humMinima == '') {
+        $errores[] = "Debes añadir una humedad minima";
+    }
+    if ($humMaxima == '') {
+        $errores[] = "Debes añadir una humedad máxima";
+    }
+    if (!$modelo) {
+        $errores[] = "Debes añadir el modelo del dispositivo";
+    }
+    if (!$idConexion) {
         $errores[] = "Debes añadir el id del dispositivo";
+    }
+    if ($temMinima > $temMaxima) {
+        $errores[] = "La temperatura minima no puede ser mayor a la temperatura máxima";
+    }
+    if ($humMinima > $humMaxima) {
+        $errores[] = "La humedad minima no puede ser mayor a la humedad máxima";
     }
 
     // Revisar que el array de errores este vacio
     if (empty($errores)) {
-        // Insertar en la base de datos
-        $query = " INSERT INTO customerDevice (idCustomer, idDevice, nombre, descripcion) VALUES ( '$idCustomer', '$id', '$nombre', '$descripcion')";
+        // Insertar en la base de dats
+        $query = "INSERT INTO device (idConexion, nombre, temMinima, temMaxima, humMinima, humMaxima, descripcion, modelo) 
+        VALUES ('$idConexion', '$nombre', '$temMinima', '$temMaxima', '$humMinima', '$humMaxima', '$descripcion', '$modelo')";
+        $resultado = mysqli_query($db, $query);
 
+        // Obtener el ID del dispositivo recién insertado
+        $id = mysqli_insert_id($db);
+
+        // Asociar el dispositivo con el usuario ---- MODIFICAR ESTE QUERY CUANDO SEA NECESARIO -----
+        $query = " INSERT INTO customerDevice (idCustomer, idDevice) VALUES ( '1', '$id')";
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
-            header('Location: ../index.php');
+            header('Location: ../index.php?resultado=1');
         }
     }
 }
@@ -71,10 +111,25 @@ incluirTemplate('header', False, True, True);
             <input type="text" id="nombre" name="nombre" placeholder="Nombre Cacteristico" value="<?php echo $nombre; ?>">
 
             <label for="descripcion">Descripcion:</label>
-            <textarea name="descripcion" id="descripcion" placeholder="Agrege una Descripcion"> <?php echo $descripcion; ?></textarea>
+            <textarea name="descripcion" id="descripcion" placeholder="Agrege una Descripcion"><?php echo $descripcion; ?></textarea>
 
-            <label for="id">ID del dispositivo:</label>
-            <input type="text" id="id" name="id" placeholder="Ej: R9ZG3AJ3GGJHEJ" value="<?php echo $id; ?>">
+            <label for="temMinima">Temperatura minima:</label>
+            <input type="number" name="temMinima" id="temMinima" placeholder="Establece una temperatura minima" value="<?php echo $temMinima ?>">
+
+            <label for="temMaxima">Temperatura máxima:</label>
+            <input type="number" name="temMaxima" id="temMaxima" placeholder="Establece una temperatura maxima" value="<?php echo $temMaxima ?>">
+
+            <label for="humMinima">Humedad minima:</label>
+            <input type="number" name="humMinima" id="humMinima" placeholder="Establece una humedad minima" value="<?php echo $humMinima ?>">
+
+            <label for="humMaxima">Humedad máxima:</label>
+            <input type="number" name="humMaxima" id="humMaxima" placeholder="Establece una humedad maxima" value="<?php echo $humMaxima ?>">
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" placeholder="Modelo del dispositivo" value="<?php echo $modelo; ?>">
+
+            <label for="idConexion">ID del dispositivo:</label>
+            <input type="text" id="idConexion" name="idConexion" placeholder="Ej: R9ZG3AJ3GGJHEJ" value="<?php echo $idConexion; ?>">
 
         </fieldset>
 
@@ -84,4 +139,6 @@ incluirTemplate('header', False, True, True);
 
 <?php
 incluirTemplate('footer', False, True, True);
+
+mysqli_close($db);
 ?>

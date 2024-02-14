@@ -1,9 +1,5 @@
 <?php
 
-function eliminarDispositivo() {
-    echo "test";
-}
-
 function cerrarSesion() {
 
 }

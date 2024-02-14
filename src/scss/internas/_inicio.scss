@@ -132,3 +132,18 @@
     border-top: .5rem solid v.$grisOscuro;
     border-radius: .2rem;
 }
+
+.alerta {
+    color: v.$blanco;
+    text-align: center;
+    display: block;
+    margin: 1rem auto;
+
+    &.exito {
+        background-color: v.$verdeOscuro;
+    }
+
+    &.error {
+        background-color: v.$rojo;
+    }
+}
