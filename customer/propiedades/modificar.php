@@ -1,5 +1,11 @@
 <?php
+// Validar inicio de sesión
 require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if(!$auth) {
+    header('Location: ../../index.php');
+}
 // Base de datos
 require '../../includes/config/database.php';
 $db = conectarDB();

@@ -1,3 +1,11 @@
+<?php 
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    
+    $auth = $_SESSION['login'] ?? false; 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,8 +36,13 @@
                         <a href="<?php echo $customer ? ( $propiedades ? "../../productos.php" : "../productos.php" ) : "productos.php" ?> ">Productos</a>
                         <a href="<?php echo $customer ? ( $propiedades ? "../../blog.php" : "../blog.php" ) : "blog.php" ?>">Blog</a>
                         <a href="<?php echo $customer ? ( $propiedades ? "../../contacto.php" : "../contacto.php" ) : "contacto.php" ?> ">Contacto</a>
-                        <a href="<?php echo $customer ? ( $propiedades ? "../../registrarse.php" : "../registrarse.php" ) : "registrarse.php" ?>">Regístrate</a>
-                        <a class="boton btn-verde" href="<?php echo $customer ? ( $propiedades ? "../../iniciarSesion.php" : "../iniciarSesion.php" ) : "iniciarSesion.php" ?>">Inicia Sesión</a>
+                        <?php if(!$auth) { ?>
+                            <a href="<?php echo $customer ? ( $propiedades ? "../../registrarse.php" : "../registrarse.php" ) : "registrarse.php" ?>">Regístrate</a>
+                            <a class="boton btn-verde" href="<?php echo $customer ? ( $propiedades ? "../../iniciarSesion.php" : "../iniciarSesion.php" ) : "iniciarSesion.php" ?>">Inicia Sesión</a>
+                        <?php } ?>
+                        <?php if($auth) { ?>
+                            <a href="<?php echo $customer ? ( $propiedades ? "../../cerrar-sesion.php": "../cerrar-sesion.php") : "cerrar-sesion.php" ?> ">Cerrar Sesión</a>
+                        <?php } ?>
                     </nav>
                 </div> <!--barra-->
 

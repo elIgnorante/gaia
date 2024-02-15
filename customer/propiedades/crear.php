@@ -1,5 +1,13 @@
 <?php
+// Validar inicio de sesión
 require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if(!$auth) {
+    header('Location: ../../index.php');
+}
+
+$idCustomer = $_SESSION['idCus'];
 // Base de datos
 require '../../includes/config/database.php';
 $db = conectarDB();
@@ -75,8 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Obtener el ID del dispositivo recién insertado
         $id = mysqli_insert_id($db);
 
-        // Asociar el dispositivo con el usuario ---- MODIFICAR ESTE QUERY CUANDO SEA NECESARIO -----
-        $query = " INSERT INTO customerDevice (idCustomer, idDevice) VALUES ( '1', '$id')";
+        // Asociar el dispositivo con el usuario 
+        $query = " INSERT INTO customerDevice (idCustomer, idDevice) VALUES ( '$idCustomer', '$id')";
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
